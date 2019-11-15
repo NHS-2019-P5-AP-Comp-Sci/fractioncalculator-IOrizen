@@ -11,6 +11,7 @@ public class FracCalc {
 			System.out.println(produceAnswer(fractions));
 			fractions = userInput.nextLine();
 		}
+		userInput.close();
 		// TODO: Read the input from the user and call produceAnswer with an equation
 
 	}
@@ -62,8 +63,55 @@ public class FracCalc {
 		int firstDenominator = Integer.parseInt(denominator(firstFraction));
 		int secondDenominator = Integer.parseInt(denominator(secondFraction));
 
-		return "whole:" + secondWhole + " numerator:" +secondNumerator + " denominator:"+secondDenominator;
+		
+		int answerNumerator = 0;
+		int answerDenominator = 0;
+			if (firstFraction.indexOf("-")!=-1 && firstFraction.indexOf("_")!=-1) {
+				firstNumerator = (firstWhole*firstDenominator-firstNumerator);
+				if (operator.equals("+") || operator.equals("-")) {
+					firstNumerator*=secondDenominator;
+				}
+			} else if (operator.equals("+") || operator.equals("-")){
+				firstNumerator = (firstNumerator + firstWhole * firstDenominator) * secondDenominator;
+			} else {
+				firstNumerator = (firstNumerator + firstWhole * firstDenominator);
+			}
+			
+			if (secondFraction.indexOf("-")!=-1 && secondFraction.indexOf("_")!=-1) {
+				secondNumerator = (secondWhole * secondDenominator-secondNumerator);
+				if (operator.equals("+") || operator.equals("-")) {
+					secondNumerator*= firstDenominator;
+				}
+			} else if (operator.equals("+") || operator.equals("-")){
+				secondNumerator = (secondNumerator + secondWhole * secondDenominator) * firstDenominator;
+			} else {
+				secondNumerator = (secondNumerator + secondWhole * secondDenominator);
+			}
+			if (operator.equals("+") || operator.equals("-")) {
+			firstDenominator *= secondDenominator;
+			secondDenominator = firstDenominator;
+			}
+			
+			
+			if (operator.equals("+")) {
+				answerNumerator = firstNumerator + secondNumerator;
+				answerDenominator = firstDenominator;
+			} else if (operator.equals("-")){
+				answerNumerator = firstNumerator - secondNumerator;
+				answerDenominator = firstDenominator;
+			} else if (operator.equals("*")) {
+				answerNumerator = firstNumerator * secondNumerator;
+				answerDenominator = firstDenominator * secondDenominator;
+			} else if (operator.equals("/")) {
+				int tempNumerator = secondNumerator;
+				secondNumerator = secondDenominator;
+				secondDenominator = tempNumerator;
+				answerNumerator = firstNumerator * secondNumerator;
+				answerDenominator = firstDenominator * secondDenominator;
+			}
+		return answerNumerator+"/"+answerDenominator;
 	}
+
 	public static String whole(String fraction) {
 		String whole = "";
 		if (fraction.indexOf("/") == -1) {
