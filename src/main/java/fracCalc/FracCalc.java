@@ -4,8 +4,8 @@ import java.util.*;
 
 public class FracCalc {
 
-	// Prompts user for fraction input
 	public static void main(String[] args) {
+		// Prompts user for fraction input
 		Scanner userInput = new Scanner(System.in);
 		String fractions = userInput.nextLine();
 		while (!(fractions.toUpperCase()).equals("QUIT")) {
